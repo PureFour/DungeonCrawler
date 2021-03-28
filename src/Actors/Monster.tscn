@@ -1,0 +1,152 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://assets/tileset/big_zombie_run_anim_f2.png" type="Texture" id=1]
+[ext_resource path="res://assets/tileset/big_zombie_idle_anim_f3.png" type="Texture" id=2]
+[ext_resource path="res://assets/tileset/big_zombie_idle_anim_f2.png" type="Texture" id=3]
+[ext_resource path="res://assets/tileset/big_zombie_idle_anim_f0.png" type="Texture" id=4]
+[ext_resource path="res://assets/tileset/big_zombie_run_anim_f1.png" type="Texture" id=5]
+[ext_resource path="res://assets/tileset/big_zombie_run_anim_f0.png" type="Texture" id=6]
+[ext_resource path="res://assets/tileset/big_zombie_run_anim_f3.png" type="Texture" id=7]
+[ext_resource path="res://assets/tileset/big_zombie_idle_anim_f1.png" type="Texture" id=8]
+[ext_resource path="res://src/Actors/Monster.gd" type="Script" id=9]
+[ext_resource path="res://src/Actors/Hitbox.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/UI/HealthIndicator.tscn" type="PackedScene" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10.6918, 15.4091 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 1 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "running",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=3]
+resource_name = "die"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 0.143587 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -90.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -14.349 ), Vector2( 0, -6.398 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.2, 1.2 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.984314, 0.270588, 0.270588, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 83.2184
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10, 8.66258 )
+
+[node name="Monster" type="KinematicBody2D"]
+collision_layer = 2147483649
+collision_mask = 2147483656
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -0.140306, -10.1723 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -14.349 )
+frames = SubResource( 2 )
+animation = "idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/die = SubResource( 3 )
+anims/hurt = SubResource( 4 )
+
+[node name="view_range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="view_range"]
+visible = false
+modulate = Color( 0.603922, 0.870588, 0.0784314, 1 )
+position = Vector2( -0.00034681, -9.77582 )
+shape = SubResource( 5 )
+
+[node name="Monster_Hitbox" parent="." instance=ExtResource( 10 )]
+modulate = Color( 1, 0.164706, 0, 1 )
+position = Vector2( 0.111366, -10.3567 )
+
+[node name="CollisionShape2D" parent="Monster_Hitbox" index="0"]
+position = Vector2( 0.222977, -0.891907 )
+shape = SubResource( 6 )
+
+[node name="HealthIndicator" parent="." groups=[
+"character",
+] instance=ExtResource( 11 )]
+margin_left = -7.15754
+margin_top = -38.8607
+margin_right = -7.15754
+margin_bottom = -38.8607
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="view_range" to="." method="_on_view_range_body_entered"]
+[connection signal="body_exited" from="view_range" to="." method="_on_view_range_body_exited"]
+[connection signal="area_entered" from="Monster_Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="area_exited" from="Monster_Hitbox" to="." method="_on_Hitbox_area_exited"]
+
+[editable path="Monster_Hitbox"]

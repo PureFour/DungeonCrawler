@@ -1,0 +1,155 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/tileset/ui_heart_empty.png" type="Texture" id=1]
+[ext_resource path="res://assets/tileset/ui_heart_full.png" type="Texture" id=2]
+[ext_resource path="res://src/UI/PlayerUI.gd" type="Script" id=3]
+[ext_resource path="res://assets/tileset/ui.png" type="Texture" id=4]
+[ext_resource path="res://src/Items/inventory/Inventory.tscn" type="PackedScene" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 1, 1, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[node name="PlayerUI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.111366
+margin_top = 0.111359
+margin_right = -0.111328
+margin_bottom = 0.111328
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPBar" type="Control" parent="."]
+margin_right = 60.0
+margin_bottom = 15.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP1" type="TextureProgress" parent="HPBar"]
+margin_right = 4.0
+margin_bottom = 14.0
+step = 50.0
+value = 100.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP2" type="TextureProgress" parent="HPBar"]
+margin_left = 14.748
+margin_top = -0.117985
+margin_right = 30.748
+margin_bottom = 15.882
+step = 50.0
+value = 100.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP3" type="TextureProgress" parent="HPBar"]
+margin_left = 29.6207
+margin_top = -0.353954
+margin_right = 45.6207
+margin_bottom = 15.646
+step = 50.0
+value = 100.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP4" type="TextureProgress" parent="HPBar"]
+margin_left = 44.716
+margin_top = -0.471935
+margin_right = 60.716
+margin_bottom = 15.5281
+step = 50.0
+value = 100.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+margin_left = 1.0
+margin_top = 15.0
+margin_right = 294.0
+margin_bottom = 29.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+step = 1.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" type="Control" parent="."]
+visible = false
+margin_left = 34.4768
+margin_top = -0.793701
+margin_right = 34.4768
+margin_bottom = 1.19209e-07
+rect_scale = Vector2( 1.12794, 0.873112 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Outside" type="NinePatchRect" parent="Inventory"]
+margin_left = -235.333
+margin_top = 0.166855
+margin_right = -175.333
+margin_bottom = 71.1669
+rect_clip_content = true
+texture = ExtResource( 4 )
+draw_center = false
+region_rect = Rect2( 15, 39, 42, 26 )
+patch_margin_left = 7
+patch_margin_top = 9
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="name" type="NinePatchRect" parent="Inventory"]
+margin_left = -231.0
+margin_top = 4.0
+margin_right = -132.0
+margin_bottom = 19.0
+rect_clip_content = true
+texture = ExtResource( 4 )
+draw_center = false
+region_rect = Rect2( 221, 70, 68, 20 )
+patch_margin_left = 67
+patch_margin_top = 3
+patch_margin_right = 1
+patch_margin_bottom = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inside" type="Control" parent="Inventory"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" parent="Inventory/Inside" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -229.278
+margin_top = 18.0626
+margin_right = -181.278
+margin_bottom = 66.0626

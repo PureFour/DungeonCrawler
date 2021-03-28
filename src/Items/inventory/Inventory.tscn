@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Items/inventory/InventoryDisplay.tscn" type="PackedScene" id=1]
+
+[node name="Inventory" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -2.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryDisplay" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 576.0
+margin_top = 375.0
+margin_right = 624.0
+margin_bottom = 423.0

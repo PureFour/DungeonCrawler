@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/BLKCHCRY.TTF" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="IntroInstructions" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 302.0
+margin_bottom = 69.0
+rect_scale = Vector2( 0.407495, 0.458814 )
+custom_fonts/font = SubResource( 1 )
+text = "Welcome to dungeon!
+This is Level 1
+You have to kill all monsters and find a key to proceed to next level
+GOOD LUCK"
+__meta__ = {
+"_edit_use_anchors_": false
+}

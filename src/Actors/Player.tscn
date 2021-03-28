@@ -1,0 +1,127 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://assets/tileset/knight_m_run_anim_f0.png" type="Texture" id=1]
+[ext_resource path="res://src/Actors/Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/tileset/knight_m_run_anim_f3.png" type="Texture" id=3]
+[ext_resource path="res://assets/tileset/knight_m_run_anim_f1.png" type="Texture" id=4]
+[ext_resource path="res://assets/tileset/knight_m_run_anim_f2.png" type="Texture" id=5]
+[ext_resource path="res://assets/tileset/knight_m_idle_anim_f0.png" type="Texture" id=6]
+[ext_resource path="res://assets/tileset/knight_m_idle_anim_f3.png" type="Texture" id=7]
+[ext_resource path="res://assets/tileset/knight_m_idle_anim_f1.png" type="Texture" id=8]
+[ext_resource path="res://assets/tileset/knight_m_idle_anim_f2.png" type="Texture" id=9]
+[ext_resource path="res://src/Items/Sword.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/tileset/knight_m_hit_anim_f0.png" type="Texture" id=11]
+[ext_resource path="res://src/Actors/Hitbox.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/UI/PlayerUI.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/sounds/hurt_sound.wav" type="AudioStream" id=14]
+[ext_resource path="res://src/Actors/SwordHitbox.gd" type="Script" id=15]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": false,
+"name": "hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "running",
+"speed": 12.0
+} ]
+
+[sub_resource type="Animation" id=2]
+resource_name = "hurt"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.941176, 0.239216, 0.239216, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.2, 1.2 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 7, 11.0123 )
+
+[sub_resource type="RectangleShape2D" id=4]
+
+[node name="Player" type="KinematicBody2D"]
+collision_mask = 14
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "running"
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hurt = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -0.297304, 3.41897 )
+shape = SubResource( 3 )
+
+[node name="WeaponPosition" type="Position2D" parent="."]
+position = Vector2( 0.821388, 2.85774 )
+
+[node name="Sword" parent="WeaponPosition" instance=ExtResource( 10 )]
+position = Vector2( -0.10525, -0.2377 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 12 )]
+visible = false
+script = ExtResource( 15 )
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 0, 4.24265 )
+shape = SubResource( 4 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2( 0.990809, 1 )
+rotating = true
+current = true
+zoom = Vector2( 0.25, 0.25 )
+drag_margin_left = 1.0
+drag_margin_top = 1.0
+drag_margin_right = 1.0
+drag_margin_bottom = 1.0
+editor_draw_limits = true
+
+[node name="PlayerUI" parent="Camera2D" instance=ExtResource( 13 )]
+margin_left = 87.2842
+margin_top = -94.5314
+margin_right = 87.2843
+margin_bottom = -94.5314
+
+[node name="HurtEffect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+bus = "Effects"
+[connection signal="camera_zoom_in" from="." to="Camera2D/PlayerUI" method="_on_Player_camera_zoom_in"]
+[connection signal="camera_zoom_out" from="." to="Camera2D/PlayerUI" method="_on_Player_camera_zoom_out"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="area_exited" from="Hitbox" to="." method="_on_Hitbox_area_exited"]
+
+[editable path="Hitbox"]

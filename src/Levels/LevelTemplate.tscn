@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/UI/FadeOut.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Levels/2LayerTileMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Levels/Doors.tscn" type="PackedScene" id=3]
+
+[node name="LevelTemplate" type="Node2D"]
+
+[node name="2LayerTileMap" parent="." instance=ExtResource( 2 )]
+
+[node name="Doors" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="FadeOut" parent="." instance=ExtResource( 1 )]
